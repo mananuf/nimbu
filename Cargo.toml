@@ -1,0 +1,43 @@
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/mananuf/nimbu"
+
+[workspace]
+members = [
+    "bin/scheduler", 
+    "bin/worker",
+    "crates/nimbu-core", 
+    "crates/nimbu-network", 
+    "crates/nimbu-observability", 
+    "crates/nimbu-proto", 
+    "crates/nimbu-scheduler", 
+    "crates/nimbu-storage", 
+    "crates/nimbu-worker"
+]
+
+# Explicitly set the resolver to version 2, which is the default for packages with edition >= 2021
+# https://doc.rust-lang.org/edition-guide/rust-2021/default-cargo-resolver.html
+resolver = "3" # Use the new dependency resolver
+
+[workspace.dependencies]
+scheduler = { path = "bin/scheduler"}
+worker = { path = "bin/worker"}
+nimbu-core = { path = "crates/nimbu-core"} 
+nimbu-network = { path = "crates/nimbu-network"}
+nimbu-observability = { path = "crates/nimbu-observability"} 
+nimbu-proto = { path = "crates/nimbu-proto"} 
+nimbu-scheduler = { path = "crates/nimbu-scheduler"} 
+nimbu-storage = { path = "crates/nimbu-storage"} 
+nimbu-worker = { path = "crates/nimbu-worker"}
+
+[workspace.lints]
+rust.missing_debug_implementations = "warn"
+rust.missing_docs = "warn"
+rust.rust_2018_idioms = { level = "deny", priority = -1 }
+rust.unreachable_pub = "warn"
+rust.unused_must_use = "deny"
+rustdoc.all = "warn"
+
