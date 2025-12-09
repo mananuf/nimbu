@@ -41,7 +41,22 @@ fn test_failed_permanent_transition() {
             .is_err()
     );
 
+    // fails permanently if running
     let s = TaskStatus::Running;
+    assert!(
+        s.mark_as_failed_permanent("error_occured".to_string())
+            .is_ok()
+    );
+    assert_eq!(
+        s.mark_as_failed_permanent("error_occured".to_string())
+            .unwrap(),
+        TaskStatus::FailedPermanent {
+            error: "error_occured".to_string()
+        }
+    );
+
+    // fails permananetly if already in failed state
+    let s = TaskStatus::Failed { attempt: 3, error: "error".into() };
     assert!(
         s.mark_as_failed_permanent("error_occured".to_string())
             .is_ok()
