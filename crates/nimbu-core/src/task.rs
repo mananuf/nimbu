@@ -98,7 +98,7 @@ impl TaskStatus {
         error: String,
     ) -> Result<TaskStatus, TaskTransitionError> {
         match self {
-            TaskStatus::Running => Ok(TaskStatus::FailedPermanent { error }),
+            TaskStatus::Running | TaskStatus::Failed { .. } => Ok(TaskStatus::FailedPermanent { error }),
             status => Err(TaskTransitionError::Illegal {
                 from: status.as_str(),
                 to: "FailedPermanent",
