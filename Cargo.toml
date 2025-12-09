@@ -33,6 +33,9 @@ nimbu-scheduler = { path = "crates/nimbu-scheduler"}
 nimbu-storage = { path = "crates/nimbu-storage"} 
 nimbu-worker = { path = "crates/nimbu-worker"}
 
+serde = { version = "1", features = ["derive"] }
+thiserror = "2.0.17"
+
 [workspace.lints]
 rust.missing_debug_implementations = "warn"
 rust.missing_docs = "warn"
