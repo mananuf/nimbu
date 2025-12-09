@@ -56,7 +56,10 @@ fn test_failed_permanent_transition() {
     );
 
     // fails permananetly if already in failed state
-    let s = TaskStatus::Failed { attempt: 3, error: "error".into() };
+    let s = TaskStatus::Failed {
+        attempt: 3,
+        error: "error".into(),
+    };
     assert!(
         s.mark_as_failed_permanent("error_occured".to_string())
             .is_ok()
