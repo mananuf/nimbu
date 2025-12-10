@@ -1,4 +1,4 @@
-use nimbu_core::TaskStatus;
+use nimbu_core::{JobId, RetryPolicy, Task, TaskStatus};
 
 #[test]
 fn test_valid_transitions() {
@@ -71,4 +71,59 @@ fn test_failed_permanent_transition() {
             error: "error_occured".to_string()
         }
     );
+}
+
+#[test]
+fn test_valid_transitions_with_retry_policy() {
+    let mut t = Task::builder(vec![])
+        .retry_policy(
+            RetryPolicy::builder()
+                .max_retries(3)
+                .backoff_ms(100)
+                .build(),
+        )
+        .build();
+
+    t.assign().unwrap();
+    t.start().unwrap();
+    t.complete().unwrap();
+
+    assert_eq!(t.status, TaskStatus::Completed);
+}
+
+#[test]
+fn test_retry_flow() {
+    let job = JobId::new();
+    let mut t = Task::builder(vec![])
+        .job_id(job)
+        .retry_policy(
+            RetryPolicy::builder()
+                .max_retries(2)
+                .backoff_ms(100)
+                .build(),
+        )
+        .build();
+
+    t.assign().unwrap();
+    t.start().unwrap();
+
+    t.fail_retry("err").unwrap();
+    match &t.status {
+        TaskStatus::Failed { attempt, .. } => assert_eq!(*attempt, 1),
+        _ => panic!("wrong state"),
+    }
+}
+
+#[test]
+fn test_retry_limit_exceeded() {
+    let mut t = Task::builder(vec![])
+        .retry_policy(RetryPolicy::builder().max_retries(1).build())
+        .build();
+
+    t.assign().unwrap();
+    t.start().unwrap();
+    t.fail_retry("err").unwrap();
+
+    t.start().unwrap_err();
+    assert!(t.fail_retry("again").is_err());
 }
