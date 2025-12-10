@@ -1,7 +1,7 @@
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq)]
 pub struct JobId(String);
 
 impl JobId {
@@ -10,7 +10,7 @@ impl JobId {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq)]
 pub struct TaskId(String);
 
 impl TaskId {
