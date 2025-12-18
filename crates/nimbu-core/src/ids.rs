@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
@@ -18,3 +20,9 @@ impl TaskId {
         Self(Uuid::new_v4().to_string())
     }
 }
+
+// impl Display for TaskId {
+//     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        
+//     }
+// }
