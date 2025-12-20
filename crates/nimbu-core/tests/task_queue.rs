@@ -1,6 +1,6 @@
 use std::time::Duration;
 
-use nimbu_core::{Task, task_queue::TaskQueue};
+use nimbu_core::{Task, task_queues::TaskQueue};
 use tokio::time::{advance, pause, timeout};
 
 #[tokio::test]

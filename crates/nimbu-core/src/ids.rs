@@ -1,9 +1,7 @@
-use std::fmt::Display;
-
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq, Default)]
 pub struct JobId(String);
 
 impl JobId {
@@ -12,7 +10,7 @@ impl JobId {
     }
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq)]
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Hash, Eq, Default)]
 pub struct TaskId(String);
 
 impl TaskId {
@@ -23,6 +21,6 @@ impl TaskId {
 
 // impl Display for TaskId {
 //     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        
+
 //     }
 // }
